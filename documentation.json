@@ -1,0 +1,99 @@
+{
+  "name": "Veritent",
+  "colors": {
+    "light": {
+      "brand": "#003d60"
+    },
+    "dark": {
+      "brand": "#51BDFB"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "icon": "book",
+        "groups": [
+          {
+            "group": "Overview",
+            "icon": "layers",
+            "pages": [
+              {
+                "title": "Help Center",
+                "path": "help-center",
+                "icon": "home"
+              }
+            ]
+          },
+          {
+            "group": "Integrations",
+            "icon": "plug",
+            "pages": [
+              {
+                "title": "Integrations",
+                "path": "integrations",
+                "icon": "link"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "Endpoints",
+            "icon": "terminal",
+            "openapi": "api-reference/openapi.yaml",
+            "pages": []
+          }
+        ]
+      },
+      {
+        "tab": "Help Center",
+        "icon": "help-circle",
+        "pages": [
+          {
+            "title": "Help Center",
+            "path": "help-center",
+            "icon": "home"
+          },
+          {
+            "group": "FAQs",
+            "icon": "help-circle",
+            "expandable": false,
+            "pages": [
+              {
+                "title": "Start with Veritent",
+                "path": "help-center/faq/start-with-veritent"
+              }
+            ]
+          },
+          {
+            "group": "Troubleshooting",
+            "icon": "alert-triangle",
+            "expandable": false,
+            "pages": [
+              {
+                "title": "Okta Login Issues",
+                "path": "help-center/troubleshooting/okta-login-issues"
+              }
+            ]
+          },
+          {
+            "group": "Guides",
+            "icon": "book-open",
+            "expandable": false,
+            "pages": [
+              {
+                "title": "Setup Okta SSO",
+                "path": "help-center/guides/setup-okta-sso"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

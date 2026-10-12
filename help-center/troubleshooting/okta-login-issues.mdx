@@ -1,0 +1,29 @@
+---
+title: Cannot Login with Okta
+description: Quick fix for Veritent Okta SSO login errors.
+---
+
+## Symptoms
+
+- Error: "Unable to authenticate using Okta"
+- Stuck on login screen
+
+## Common Causes
+
+- Wrong Okta Org URL
+- Revoked or expired Okta token
+- Account disabled in Okta
+
+## Quick Fix
+
+<Steps>
+  <Step title="Check Okta URL">
+    Make sure Okta Org URL matches your company account (e.g. `company.okta.com`).
+  </Step>
+  <Step title="Refresh API Token">
+    Generate a new Okta API token and update in Veritent dashboard.
+  </Step>
+  <Step title="Contact Admin">
+    Confirm your Okta account status with your IT admin.
+  </Step>
+</Steps>

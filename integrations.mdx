@@ -1,0 +1,170 @@
+---
+title: Integrations
+description: Connect Veritent with Okta IAM, AWS, and other tools for seamless integrations.
+---
+
+## Overview
+
+Veritent integrates seamlessly with Okta for identity and access management (IAM), AWS Marketplace for deployments, webhooks for notifications, and third-party SSO providers via APIs. Use these integrations to enhance security, automate workflows, and streamline user access.
+
+<Columns cols={2}>
+  <Card title="Okta IAM" icon="shield" href="#okta-setup">
+    Set up Okta authentication for secure user management.
+  </Card>
+  <Card title="AWS Marketplace" icon="cloud" href="#aws-deployment">
+    Deploy Veritent instances quickly via AWS.
+  </Card>
+  <Card title="Webhooks" icon="zap" href="#webhook-setup">
+    Receive real-time notifications on events.
+  </Card>
+  <Card title="Third-party SSO" icon="users" href="#sso-apis">
+    Connect with external SSO and APIs.
+  </Card>
+</Columns>
+
+<Callout kind="info">
+  Ensure you have admin access to your Okta tenant and AWS account before starting.
+</Callout>
+
+## Okta Authentication Setup
+
+Configure Okta as your identity provider for Veritent. This enables single sign-on (SSO) and just-in-time (JIT) provisioning.
+
+<Steps>
+  <Step title="Create Okta App" icon="plus">
+    Log in to your Okta Admin Console. Navigate to Applications > Create App Integration. Select OIDC - OpenID Connect as the sign-in method.
+  </Step>
+  <Step title="Configure Settings">
+    Set the grant type to Authorization Code. Enter your Veritent callback URL: `https://dashboard.example.com/auth/callback`.
+  </Step>
+  <Step title="Add Veritent Client ID">
+    Copy the Client ID and Client Secret. Paste them into your Veritent dashboard under Integrations > Okta.
+  </Step>
+  <Step title="Test Connection" icon="check-circle">
+    Click Test Connection in Veritent. Users can now log in via Okta.
+  </Step>
+</Steps>
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  const oktaConfig = {
+    clientId: 'YOUR_OKTA_CLIENT_ID',
+    clientSecret: 'YOUR_OKTA_CLIENT_SECRET',
+    issuer: 'https://your-domain.okta.com/oauth2/default',
+    redirectUri: 'https://dashboard.example.com/auth/callback'
+  };
+  ```
+  ```python
+  okta_config = {
+      "client_id": "YOUR_OKTA_CLIENT_ID",
+      "client_secret": "YOUR_OKTA_CLIENT_SECRET",
+      "issuer": "https://your-domain.okta.com/oauth2/default",
+      "redirect_uri": "https://dashboard.example.com/auth/callback"
+  }
+  ```
+</CodeGroup>
+
+## AWS Marketplace Deployment
+
+Deploy Veritent on AWS Marketplace for scalable infrastructure.
+
+<Tabs>
+  <Tab title="One-Click Deploy" icon="rocket">
+    Visit the [AWS Marketplace](https://aws.amazon.com/marketplace). Search for Veritent. Click Continue to Subscribe, then Launch.
+
+    <CodeGroup tabs="CloudFormation,CLI">
+      ```bash
+      aws cloudformation create-stack \
+        --stack-name veritent-stack \
+        --template-url https://example.com/veritent-template.yaml \
+        --parameters ParameterKey=InstanceType,ParameterValue=t3.medium
+      ```
+      ```yaml
+      Resources:
+        VeritentInstance:
+          Type: AWS::EC2::Instance
+          Properties:
+            ImageId: ami-0abcdef1234567890
+            InstanceType: t3.medium
+      ```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Custom VPC" icon="settings">
+    Use your existing VPC. Specify subnet IDs and security groups during launch.
+
+    Ensure ports 443 (HTTPS) and 80 (HTTP) are open.
+  </Tab>
+</Tabs>
+
+## Webhook Setup for Notifications
+
+Set up webhooks to receive events like user login or policy changes.
+
+<ParamField path="webhook_url" param-type="string" required="true">
+  Your public endpoint, e.g., `https://your-webhook-url.com/veritent`.
+</ParamField>
+
+<ParamField header="Authorization" param-type="string" required="false">
+  Bearer `{YOUR_API_KEY}` for secure delivery.
+</ParamField>
+
+<Request tabs="cURL,JavaScript" show-lines="true">
+  ```bash
+  curl -X POST https://api.example.com/v1/webhooks \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer YOUR_API_KEY" \
+    -d '{
+      "url": "https://your-webhook-url.com/veritent",
+      "events": ["user.login", "policy.change"]
+    }'
+  ```
+  ```javascript
+  await fetch('https://api.example.com/v1/webhooks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer YOUR_API_KEY'
+    },
+    body: JSON.stringify({
+      url: 'https://your-webhook-url.com/veritent',
+      events: ['user.login', 'policy.change']
+    })
+  });
+  ```
+</Request>
+
+<Response tabs="200,400">
+  ```json
+  {
+    "id": "wh_1234567890",
+    "url": "https://your-webhook-url.com/veritent",
+    "status": "active",
+    "events": ["user.login", "policy.change"]
+  }
+  ```
+  ```json
+  {
+    "error": "Invalid URL format"
+  }
+  ```
+</Response>
+
+## Third-party SSO and APIs
+
+<Expandable title="Advanced SSO Configuration" default-open="true">
+  Integrate with providers like Azure AD or Google Workspace using SAML 2.0 or OIDC.
+
+  Download the Veritent metadata XML from your dashboard. Upload it to your SSO provider's configuration panel.
+</Expandable>
+
+<Expandable title="Custom API Integrations">
+  Use Veritent's REST API for custom workflows.
+
+  Base URL: `https://api.example.com/v1`
+
+  Authenticate with `Authorization: Bearer {YOUR_API_KEY}`.
+</Expandable>
+
+<Callout kind="tip">
+  Monitor integration logs in your Veritent dashboard for troubleshooting. Contact support for complex setups.
+</Callout>
